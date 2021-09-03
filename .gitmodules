@@ -1,0 +1,9 @@
+[submodule "atelier"]
+	path = atelier
+	url = https://github.com/Enalye/atelier.git
+[submodule "grimoire"]
+	path = grimoire
+	url = https://github.com/Enalye/grimoire.git
+[submodule "minuit"]
+	path = minuit
+	url = https://github.com/Enalye/minuit.git

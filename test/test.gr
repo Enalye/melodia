@@ -1,0 +1,18 @@
+main {
+    "playing":printl;
+    note(0, do5!, 100);
+    note(0, 69 + 3, 100);
+    wait(60);
+    note(0, 69 - 5, 100);
+    note(0, 69 - 2, 100);
+    wait(60);
+    note(0, 69, 100);
+    wait(60);
+    note(0, 74, 100);
+    "end":printl;
+}
+
+func wait(int dur) {
+    loop(dur)
+        yield
+}

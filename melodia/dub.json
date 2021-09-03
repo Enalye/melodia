@@ -1,0 +1,58 @@
+{
+	"name": "melodia",
+	"description": "Melodia Studio",
+	"authors": [
+		"Enalye"
+	],
+	"copyright": "Enalye",
+	"license": "proprietary",
+	"dependencies": {
+		"atelier": {
+			"version": "~master",
+			"path": "../atelier"
+		},
+		"grimoire": {
+			"version": "~master",
+			"path": "../grimoire"
+		},
+        "minuit": {
+			"version": "~master",
+			"path": "../minuit"
+		}
+	},
+	"targetName": "melodia",
+	"targetType": "executable",
+	"workingDirectory": "..",
+	"buildTypes": {
+		"unittest": {
+			"buildOptions": ["unittests", "debugMode", "debugInfo"]
+		},
+		"debug": {
+			"buildOptions": ["debugMode", "debugInfo"]
+		},
+		"release": {
+			"buildOptions": ["releaseMode", "optimize", "inline", "noBoundsCheck"]
+		}
+	},
+	"configurations": [
+		{
+			"name": "linux-build",
+			"platforms": ["linux"],
+			"targetPath": "../bin"
+		},
+		{
+			"name": "windows-build",
+			"platforms": ["windows"],
+			"targetPath": "../bin"
+		},
+		{
+			"name": "windows-release",
+			"platforms": ["windows"],
+			"targetPath": "../release$ARCH",
+			"lflags":[
+				"-subsystem:windows",
+				"-entry:mainCRTStartup"
+			]
+		}
+	]
+}

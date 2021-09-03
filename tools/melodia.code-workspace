@@ -1,0 +1,14 @@
+{
+    "folders": [
+        {
+            "path": "../melodia"
+        },
+        {
+            "path": "../atelier"
+        },
+        {
+            "path": "../grimoire"
+        }
+    ],
+    "settings": {}
+}

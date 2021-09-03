@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/melodia
+melodia.so
+melodia.dylib
+melodia.dll
+melodia.a
+melodia.lib
+melodia-test-*
+*.exe
+*.o
+*.obj
+*.lst

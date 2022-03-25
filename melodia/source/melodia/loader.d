@@ -8,7 +8,7 @@ module melodia.loader;
 import std.conv : to;
 import std.file, std.path, std.exception;
 import atelier;
-import melodia.config;
+import melodia.core;
 
 /// Charge toutes les données requises
 void loadResources() {

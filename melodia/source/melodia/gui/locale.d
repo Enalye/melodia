@@ -7,7 +7,7 @@ module melodia.gui.locale;
 
 import std.path, std.file, std.string, std.exception;
 import atelier;
-import melodia.config, melodia.locale;
+import melodia.core;
 import melodia.gui.buttons;
 
 final class SelectLocaleModal: GuiElement {

@@ -3,10 +3,11 @@
  * License: Zlib
  * Authors: Enalye
  */
-module melodia.locale;
+module melodia.core.locale;
 
 import std.file;
 import atelier;
+import melodia.core.config : saveConfig;
 
 private {
     string _localeFilePath;
@@ -28,9 +29,6 @@ void setLocale(string filePath) {
     }
 
     sendCustomEvent("locale");
-
-    import melodia.config : saveConfig;
-
     saveConfig();
 }
 

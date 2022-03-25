@@ -6,7 +6,7 @@
 module melodia.gui;
 
 public {
-    import melodia.gui.window;
+    import melodia.gui.editor;
     import melodia.gui.locale;
     import melodia.gui.logger;
 }

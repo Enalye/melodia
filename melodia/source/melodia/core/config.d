@@ -3,11 +3,12 @@
  * License: Zlib
  * Authors: Enalye
  */
-module melodia.config;
+module melodia.core.config;
 
 import std.file, std.path;
 import atelier, minuit;
-import melodia.locale, melodia.midi;
+import melodia.midi;
+import melodia.core.locale;
 
 private {
     bool _isConfigFilePathConfigured;
@@ -21,7 +22,7 @@ bool isDevMode() {
 }
 
 string getBasePath() {
-    if(_isDevMode) {
+    if (_isDevMode) {
         return getcwd();
     }
     else {
@@ -39,13 +40,13 @@ string getCurrentFolder() {
 
 /// Load config file
 void loadConfig() {
-    if(!_isConfigFilePathConfigured) {
+    if (!_isConfigFilePathConfigured) {
         _isConfigFilePathConfigured = true;
         _configFilePath = buildNormalizedPath(getBasePath(), _configFilePath);
     }
-    if(!exists(_configFilePath)) {
+    if (!exists(_configFilePath)) {
         saveConfig();
-        if(!exists(_configFilePath))
+        if (!exists(_configFilePath))
             return;
     }
     JSONValue json = parseJSON(readText(_configFilePath));
@@ -62,8 +63,8 @@ void saveConfig() {
     auto midiOut = getMidiOut();
     json["output"] = (midiOut && midiOut.port) ? midiOut.port.name : "";
     json["locale"] = (getLocale().length && exists(getLocale())) ?
-        relativePath(buildNormalizedPath(getLocale()), getBasePath()) :
-        buildNormalizedPath("locale", "en.json");
+        relativePath(buildNormalizedPath(getLocale()), getBasePath()) : buildNormalizedPath(
+            "locale", "en.json");
     json["folder"] = getCurrentFolder();
 
     std.file.write(_configFilePath, toJSON(json, true));

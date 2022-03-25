@@ -6,26 +6,26 @@
 module melodia.midi.device;
 
 import minuit;
+import melodia.core;
 
 private {
-	MnOutput _midiOut;
+    MnOutput _midiOut;
 }
 
 void initializeMidiDevices() {
-	_midiOut = new MnOutput;
+    _midiOut = new MnOutput;
 }
 
 void closeMidiDevices() {
-    if(_midiOut)
+    if (_midiOut)
         _midiOut.close();
-	_midiOut = null;
+    _midiOut = null;
 }
 
 void selectMidiOutDevice(MnOutputPort port) {
-    import melodia.config: saveConfig;
-    if(!_midiOut)
+    if (!_midiOut)
         return;
-    if(!port) {
+    if (!port) {
         _midiOut.close();
         _midiOut.port = null;
         saveConfig();
@@ -33,11 +33,11 @@ void selectMidiOutDevice(MnOutputPort port) {
     }
     _midiOut.close();
     _midiOut.port = port;
-    if(port)
+    if (port)
         _midiOut.open(port);
     saveConfig();
 }
 
 MnOutput getMidiOut() {
-	return _midiOut;
+    return _midiOut;
 }

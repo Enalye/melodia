@@ -82,6 +82,7 @@ private final class ScriptHandler {
             if (!_bytecode) {
                 _isLoaded = false;
                 _error = compiler.getError();
+                writeln(_error.prettify());
                 cleanup();
                 return;
             }
@@ -90,18 +91,19 @@ private final class ScriptHandler {
             _engine.addLibrary(_stdLib);
             _engine.addLibrary(_melodiaLib);
             _engine.load(_bytecode);
-            _engine.spawn();
+            if (_engine.hasEvent("onLoad"))
+                _engine.callEvent("onLoad");
 
             _timeout = new TimeoutThread(this);
             _timeout.start();
             _isLoaded = true;
         }
         catch (Exception e) {
-            logMessage(e.msg);
+            writeln(e.msg);
             cleanup();
         }
         catch (Error e) {
-            logMessage(e.msg);
+            writeln(e.msg);
             //We need to atleast kill the hanging thread.
             cleanup();
             throw e;
@@ -126,7 +128,8 @@ private final class ScriptHandler {
             _isLoaded = false;
             _engine = new GrEngine;
             _engine.load(_bytecode);
-            _engine.spawn();
+            if (_engine.hasEvent("onLoad"))
+                _engine.callEvent("onLoad");
             _isLoaded = true;
         }
         catch (Exception e) {
@@ -159,7 +162,7 @@ private final class ScriptHandler {
                 _timeout.isRunning = false;
                 throw new Exception("Panic: " ~ to!string(_engine.panicMessage));
             }
-            else if (!_engine.hasCoroutines) {
+            else if (!_engine.hasTasks) {
                 _timeout.isRunning = false;
             }
         }
@@ -183,8 +186,9 @@ private final class ScriptHandler {
 private {
     ScriptHandler _handler;
     string _onNoteEnterEventName, _onNoteHitEventName, _onNoteExitEventName,
-        _onNoteInputEventName, _onStartEventName, _onEndEventName, _onFileDropEventName;
+    _onNoteInputEventName, _onStartEventName, _onEndEventName, _onFileDropEventName;
     Logger _logger;
+    bool _isPaused;
 }
 
 ///Setup the script handler.
@@ -207,11 +211,12 @@ void loadScript(string filePath) {
     if (!_handler)
         return;
     _handler.load(filePath);
+    _isPaused = false;
 }
 
 ///Process a single pass of the VM.
 void runScript() {
-    if (!_handler)
+    if (!_handler || _isPaused)
         return;
     _handler.run();
 }
@@ -221,6 +226,7 @@ void reloadScript() {
     if (!_handler)
         return;
     _handler.reload();
+    _isPaused = false;
 }
 
 ///Relaunch the VM without recompiling.
@@ -237,6 +243,20 @@ void killScript() {
     _handler.kill();
 }
 
+void setScriptPause(bool pause) {
+    _isPaused = pause;
+}
+
+bool getScriptPause() {
+    return _isPaused;
+}
+
 string getScriptFilePath() {
     return _handler ? _handler._filePath : "";
+}
+
+bool isScriptPlaying() {
+    if (!_handler)
+        return false;
+    return true;
 }

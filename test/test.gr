@@ -1,18 +1,24 @@
-main {
+event onLoad() {
+    test();
+    /*
     "playing":printl;
-    note(0, do5!, 100);
-    note(0, 69 + 3, 100);
-    wait(60);
-    note(0, 69 - 5, 100);
-    note(0, 69 - 2, 100);
-    wait(60);
-    note(0, 69, 100);
-    wait(60);
-    note(0, 74, 100);
-    "end":printl;
+    0:note(la5, 100);
+    0:note(la5 + 3, 100);
+    wait(30);
+    0:stop(la5);
+    0:stop(la5 + 3);
+    0:note(sol5, 100);
+    0:note(sol6, 100);
+    wait(30);
+    0:note(do5, 100);
+    wait(30);
+    0:note(do6, 100);
+    "end":printl;*/
 }
 
-func wait(int dur) {
-    loop(dur)
-        yield
+function test() {
+    loop(i, 10) {
+        0:note(do5 + i, 100);
+        sleep(1:seconds);
+    }
 }
